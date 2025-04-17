@@ -1,6 +1,8 @@
 "use client";
 
+import { RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
+import { Button } from "~/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -16,7 +18,16 @@ export function AdminSettings() {
 	const utils = api.useUtils();
 
 	const [event] = api.event.get.useSuspenseQuery();
-	const { mutate: startCountdown } = api.event.setLockDate.useMutation({
+	const { mutate: showCountdown } = api.event.showCountdown.useMutation({
+		onSuccess: (data) => {
+			void utils.event.get.invalidate();
+			toast.success(
+				data.showCountdown ? "Countdown shown" : "Countdown hidden",
+			);
+		},
+	});
+
+	const { mutate: startBettingCountdown } = api.event.setLockDate.useMutation({
 		onSuccess: (data) => {
 			void utils.event.get.invalidate();
 			void utils.bet.getLockDate.invalidate();
@@ -42,6 +53,13 @@ export function AdminSettings() {
 		},
 	});
 
+	const { mutate: calculateScores } = api.admin.calculateScores.useMutation({
+		onSuccess: () => {
+			void utils.user.getScores.invalidate();
+			toast.success("Scores recalculated successfully");
+		},
+	});
+
 	return (
 		<div className="flex w-full justify-center pb-10">
 			<Card>
@@ -54,12 +72,22 @@ export function AdminSettings() {
 				<CardContent className="pt-8">
 					<div className="grid gap-6 px-6 pb-16 ">
 						<div className="flex items-center justify-between rounded-md border border-ring p-6">
-							<Label htmlFor="start-countdown">Start Countdown</Label>
+							<Label htmlFor="show-countdown">Show Countdown</Label>
+							<Switch
+								id="show-countdown"
+								defaultChecked={!!event?.showCountdown}
+								onCheckedChange={(checked) => {
+									showCountdown(checked);
+								}}
+							/>
+						</div>
+						<div className="flex items-center justify-between rounded-md border border-ring p-6">
+							<Label htmlFor="start-countdown">Start Betting Countdown</Label>
 							<Switch
 								id="start-countdown"
 								defaultChecked={!!event?.lockAt}
 								onCheckedChange={(checked) => {
-									startCountdown(checked);
+									startBettingCountdown(checked);
 								}}
 							/>
 						</div>
@@ -83,6 +111,16 @@ export function AdminSettings() {
 									showResults(checked);
 								}}
 							/>
+						</div>
+						<div className="flex items-center justify-between rounded-md border border-ring px-6 py-4.5">
+							<Label htmlFor="calculate-scores">Recalculate Scores</Label>
+							<Button
+								size="sm"
+								id="calculate-scores"
+								onClick={() => calculateScores()}
+							>
+								<RefreshCcw />
+							</Button>
 						</div>
 					</div>
 				</CardContent>

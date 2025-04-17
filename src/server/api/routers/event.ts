@@ -13,6 +13,15 @@ export const eventRouter = createTRPCRouter({
 		});
 	}),
 
+	showCountdown: adminProcedure
+		.input(z.boolean())
+		.mutation(async ({ ctx, input }) => {
+			return ctx.db.event.update({
+				where: { name: "esc" },
+				data: { showCountdown: input },
+			});
+		}),
+
 	setLockDate: adminProcedure
 		.input(z.boolean())
 		.mutation(async ({ ctx, input }) => {
@@ -39,4 +48,10 @@ export const eventRouter = createTRPCRouter({
 				data: { showResults: input },
 			});
 		}),
+
+	getRankings: publicProcedure.query(async ({ ctx }) => {
+		return ctx.db.ranking.findMany({
+			orderBy: { position: "asc" },
+		});
+	}),
 });

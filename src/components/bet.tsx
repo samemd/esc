@@ -36,8 +36,12 @@ export function Bet() {
 	const { data: lockDate } = api.bet.getLockDate.useQuery();
 	const { mutate: submitBet } = api.bet.submit.useMutation({
 		onSuccess: () => {
+			trigger();
 			void utils.bet.getForUser.invalidate();
 			toast.success("Vote submitted");
+		},
+		onError: (error) => {
+			toast.error(error.message);
 		},
 	});
 	const { mutate: deleteBet } = api.bet.delete.useMutation({
@@ -66,7 +70,6 @@ export function Bet() {
 	});
 
 	function onSubmit(data: z.infer<typeof BetSchema>) {
-		trigger();
 		submitBet(data);
 	}
 

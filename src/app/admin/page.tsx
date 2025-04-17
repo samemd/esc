@@ -5,14 +5,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { auth } from "~/server/auth";
 import { HydrateClient, api } from "~/trpc/server";
 
-export default async function Home() {
+export default async function Admin() {
 	const session = await auth();
 
 	if (!session?.user?.isAdmin) {
 		redirect("/");
 	}
 
-	const rankings = await api.admin.getRankings();
+	const rankings = await api.event.getRankings();
 	void api.event.get.prefetch();
 
 	return (

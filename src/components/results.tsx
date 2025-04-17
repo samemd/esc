@@ -33,7 +33,7 @@ export function Results({
 	const { mutate: submitRankings, isPending } =
 		api.admin.submitRankings.useMutation({
 			onSuccess: () => {
-				void utils.admin.getRankings.invalidate();
+				void utils.event.getRankings.invalidate();
 				toast.success("Rankings submitted successfully");
 				calculateScores();
 			},
@@ -52,7 +52,7 @@ export function Results({
 		},
 	});
 
-	const { data: existingRankings } = api.admin.getRankings.useQuery(undefined, {
+	const { data: existingRankings } = api.event.getRankings.useQuery(undefined, {
 		initialData: initialRankings,
 	});
 

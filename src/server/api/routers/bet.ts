@@ -1,12 +1,24 @@
-import {isAfter} from "date-fns";
-import {BetSchema} from "~/lib/schemas";
-import {createTRPCRouter, protectedProcedure, publicProcedure,} from "~/server/api/trpc";
+import { isAfter } from "date-fns";
+import { BetSchema } from "~/lib/schemas";
+import {
+	createTRPCRouter,
+	protectedProcedure,
+	publicProcedure,
+} from "~/server/api/trpc";
 
 export const betRouter = createTRPCRouter({
 	submit: protectedProcedure
 		.input(BetSchema)
 		.mutation(async ({ ctx, input }) => {
 			const { name, ...bet } = input;
+
+			const event = await ctx.db.event.findFirst({
+				where: { name: "esc" },
+			});
+
+			if (event?.isLocked) {
+				throw new Error("Bets are locked");
+			}
 
 			const [_, newBet] = await Promise.all([
 				ctx.db.user.update({
@@ -27,6 +39,14 @@ export const betRouter = createTRPCRouter({
 		}),
 
 	delete: protectedProcedure.mutation(async ({ ctx }) => {
+		const event = await ctx.db.event.findFirst({
+			where: { name: "esc" },
+		});
+
+		if (event?.isLocked) {
+			throw new Error("Bets are locked");
+		}
+
 		return ctx.db.bet.delete({
 			where: { createdById: ctx.session.user.id },
 		});

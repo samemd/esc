@@ -53,9 +53,8 @@ export default async function RootLayout({
 						</div>
 						<Toaster
 							theme="dark"
-							position="top-center"
-							offset={54}
-							mobileOffset={10}
+							position="bottom-right"
+							mobileOffset={{ bottom: 80 }}
 							richColors
 						/>
 					</SessionProvider>

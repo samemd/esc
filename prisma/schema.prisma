@@ -11,10 +11,11 @@ datasource db {
 }
 
 model Event {
-  name        String    @unique()
-  isLocked    Boolean   @default(false)
-  lockAt      DateTime?
-  showResults Boolean   @default(false)
+  name          String    @unique()
+  isLocked      Boolean   @default(false)
+  lockAt        DateTime?
+  showResults   Boolean   @default(false)
+  showCountdown Boolean   @default(true)
 }
 
 model Bet {

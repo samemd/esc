@@ -13,12 +13,6 @@ export const adminRouter = createTRPCRouter({
 			});
 		}),
 
-	getRankings: adminProcedure.query(async ({ ctx }) => {
-		return ctx.db.ranking.findMany({
-			orderBy: { position: "asc" },
-		});
-	}),
-
 	calculateScores: adminProcedure.mutation(async ({ ctx }) => {
 		const [bets, rankings] = await Promise.all([
 			ctx.db.bet.findMany(),
@@ -36,7 +30,7 @@ export const adminRouter = createTRPCRouter({
 			const score = predictions.reduce((acc, prediction) => {
 				const actual = rankings.find((r) => r.country === prediction.country);
 				if (!actual) return acc + 100;
-				return acc + (actual.position - prediction.position);
+				return acc + Math.abs(actual.position - prediction.position);
 			}, 0);
 			return {
 				userId: bet.createdById,

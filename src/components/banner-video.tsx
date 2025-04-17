@@ -46,7 +46,7 @@ export function BannerVideo({
 	}, []);
 
 	return (
-		<div className="relative h-[45vh] w-full">
+		<div className="relative h-[40vh] w-full ">
 			{/* Video background */}
 			<video
 				autoPlay
@@ -54,7 +54,7 @@ export function BannerVideo({
 				muted
 				playsInline
 				className={cn(
-					"absolute inset-0 h-full w-full object-cover [object-position:center_70%]",
+					"absolute inset-0 h-full w-full object-cover [object-position:center_70%] 2xl:[object-position:center_57%]",
 					className,
 				)}
 			>
@@ -75,15 +75,13 @@ export function BannerVideo({
 				<Image
 					src="/title.webp" // Create this transparent PNG with text positioned exactly where you want it
 					alt="Padelhalle Klybeck"
+					className="object-cover duration-200 [object-position:center_70%] 2xl:[object-position:center_57%]"
 					fill
-					style={{
-						objectFit: "cover",
-						objectPosition: "center 70%",
-						opacity: textVisible ? 1 : 0,
-					}}
+					style={{ opacity: textVisible ? 1 : 0 }}
 					priority
 				/>
 			</div>
+			<div className="absolute inset-0 inset-shadow-vignette h-full w-full" />
 		</div>
 	);
 }

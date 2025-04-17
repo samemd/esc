@@ -24,7 +24,7 @@ export default function EventPage() {
 			</div>
 
 			{/* Event Details */}
-			<div className="mx-auto max-w-7xl px-4 py-12 md:py-16">
+			<div className="mx-auto max-w-[1500px] px-4 py-12 md:py-16">
 				<div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
 					{/* Left Column - Details */}
 					<div className="space-y-8">

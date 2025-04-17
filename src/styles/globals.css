@@ -44,6 +44,8 @@
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-background-blue: var(--background-blue);
+	--inset-shadow-vignette: inset 0 0 70px 50px black;
+	--inset-shadow-top: inset 0 140px 150px -10px black;
 }
 
 :root {

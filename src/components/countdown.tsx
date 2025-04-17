@@ -1,5 +1,6 @@
 "use client";
 
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { isAfter } from "date-fns";
 import { useEffect, useState } from "react";
 import { cn } from "~/lib/utils";
@@ -15,6 +16,7 @@ interface CountdownProps {
 	title?: string;
 	targetDate?: Date | null;
 	size?: "sm" | "md";
+	className?: string;
 }
 
 const calculateTimeLeft = (targetDate: Date): TimeLeft => {
@@ -39,7 +41,13 @@ const calculateTimeLeft = (targetDate: Date): TimeLeft => {
 
 const padValue = (value: number) => String(value).padStart(2, "0");
 
-export function Countdown({ targetDate, size = "md", title }: CountdownProps) {
+export function Countdown({
+	targetDate,
+	size = "md",
+	title,
+	className,
+}: CountdownProps) {
+	const [parent] = useAutoAnimate({ duration: 200 });
 	if (!targetDate) return null;
 
 	const [timeLeft, setTimeLeft] = useState<TimeLeft>(
@@ -59,34 +67,40 @@ export function Countdown({ targetDate, size = "md", title }: CountdownProps) {
 		return () => clearInterval(timer);
 	}, [targetDate]);
 
-	// If not mounted yet or target in the past, don't render the countdown.
-	if (!mounted || isAfter(new Date(), targetDate)) return null;
-
 	return (
-		<div
-			className={cn(
-				"flex flex-col items-center justify-center gap-6 rounded-xl border bg-card p-8 shadow-md",
-				{ "md:w-md": size === "sm" },
-			)}
-		>
-			{title && (
-				<p
-					className={cn({ "text-lg": size === "md", "text-sm": size === "sm" })}
+		<div ref={parent} className="flex">
+			{mounted && !isAfter(new Date(), targetDate) && (
+				<div
+					className={cn(
+						"flex flex-col items-center justify-center gap-6 rounded-xl border bg-card p-8 shadow-md",
+						{ "md:w-md": size === "sm" },
+						className,
+					)}
 				>
-					{title}
-				</p>
+					{title && (
+						<p
+							className={cn({
+								"text-lg": size === "md",
+								"text-sm": size === "sm",
+							})}
+						>
+							{title}
+						</p>
+					)}
+
+					<div
+						className={cn("grid grid-cols-4", {
+							"gap-x-2": size === "sm",
+							"gap-x-2 md:gap-x-8": size === "md",
+						})}
+					>
+						<Counter label="Days" value={timeLeft.days} size={size} />
+						<Counter label="Hours" value={timeLeft.hours} size={size} />
+						<Counter label="Minutes" value={timeLeft.minutes} size={size} />
+						<Counter label="Seconds" value={timeLeft.seconds} size={size} />
+					</div>
+				</div>
 			)}
-			<div
-				className={cn("grid grid-cols-4", {
-					"gap-x-2": size === "sm",
-					"gap-x-2 md:gap-x-8": size === "md",
-				})}
-			>
-				<Counter label="Days" value={timeLeft.days} size={size} />
-				<Counter label="Hours" value={timeLeft.hours} size={size} />
-				<Counter label="Minutes" value={timeLeft.minutes} size={size} />
-				<Counter label="Seconds" value={timeLeft.seconds} size={size} />
-			</div>
 		</div>
 	);
 }

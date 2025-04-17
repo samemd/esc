@@ -13,7 +13,7 @@ datasource db {
 model Event {
   name        String    @unique()
   isLocked    Boolean   @default(false)
-  lockedAt    DateTime?
+  lockAt      DateTime?
   showResults Boolean   @default(false)
 }
 

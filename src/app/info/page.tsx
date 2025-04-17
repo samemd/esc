@@ -143,7 +143,7 @@ export default function EventPage() {
 									</div>
 									<div className="relative h-40 overflow-hidden rounded-lg">
 										<Image
-											src="/halle1.jpg"
+											src="/halle2.jpg"
 											alt="Padel Court 2"
 											fill
 											className="object-cover transition-transform duration-300 hover:scale-105"

@@ -13,7 +13,7 @@ export default async function Home() {
 	}
 
 	const rankings = await api.admin.getRankings();
-	void api.admin.getEvent.prefetch();
+	void api.event.get.prefetch();
 
 	return (
 		<HydrateClient>

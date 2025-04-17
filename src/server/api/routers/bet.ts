@@ -1,6 +1,6 @@
 import {isAfter} from "date-fns";
 import {BetSchema} from "~/lib/schemas";
-import {createTRPCRouter, protectedProcedure,} from "~/server/api/trpc";
+import {createTRPCRouter, protectedProcedure, publicProcedure,} from "~/server/api/trpc";
 
 export const betRouter = createTRPCRouter({
 	submit: protectedProcedure
@@ -38,7 +38,7 @@ export const betRouter = createTRPCRouter({
 		});
 	}),
 
-	getLockDate: protectedProcedure.query(async ({ ctx }) => {
+	getLockDate: publicProcedure.query(async ({ ctx }) => {
 		const event = await ctx.db.event.findFirst({
 			where: { name: "esc" },
 		});

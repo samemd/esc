@@ -14,6 +14,7 @@ import { api } from "~/trpc/react";
 
 export function AdminSettings() {
 	const utils = api.useUtils();
+
 	const [event] = api.event.get.useSuspenseQuery();
 	const { mutate: startCountdown } = api.event.setLockDate.useMutation({
 		onSuccess: (data) => {

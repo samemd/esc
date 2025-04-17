@@ -14,7 +14,7 @@ export default async function Home() {
 		<main className="flex flex-col">
 			<BannerVideo className=" w-full" />
 			{/*<div className="inset-shadow-top flex min-h-[55.8vh] flex-col items-center justify-start gap-y-8 bg-[linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.5)),url(/basel.jpg)] bg-center bg-cover py-20 text-white md:gap-y-14">*/}
-			<div className="inset-shadow-top flex min-h-[55.8vh] flex-col items-center justify-start gap-y-8 bg-gradient-to-b from-black to-background-blue py-20 text-white md:gap-y-14">
+			<div className="inset-shadow-top flex min-h-[50.8vh] flex-col items-center justify-start gap-y-8 bg-gradient-to-b from-black to-background-blue py-4 text-white md:min-h-[55.8vh] md:gap-y-14 md:py-20">
 				{event?.showCountdown && (
 					<Countdown
 						targetDate={targetDate}

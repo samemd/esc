@@ -46,7 +46,7 @@ export function BannerVideo({
 	}, []);
 
 	return (
-		<div className="relative h-[40vh] w-full ">
+		<div className="relative h-[45vh] w-full md:h-[40vh] ">
 			{/* Video background */}
 			<video
 				autoPlay
@@ -81,7 +81,7 @@ export function BannerVideo({
 					priority
 				/>
 			</div>
-			<div className="absolute inset-0 inset-shadow-vignette h-full w-full" />
+			<div className="absolute inset-0 inset-shadow-vignette-sm h-full w-full md:inset-shadow-vignette" />
 		</div>
 	);
 }

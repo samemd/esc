@@ -51,7 +51,10 @@ export default async function RootLayout({
 						<Navigation />
 						<div className="pt-0 pb-16 md:pt-16 md:pb-0">
 							<div className="relative min-h-(--min-height) w-full bg-gradient-to-b from-black to-[#15162c]">
-								<form action={logout} className="absolute right-10 bottom-10">
+								<form
+									action={logout}
+									className="absolute bottom-10 left-10 hidden md:flex"
+								>
 									<Button>
 										<LogOut />
 									</Button>

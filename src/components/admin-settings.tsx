@@ -1,6 +1,6 @@
 "use client";
 
-import { RefreshCcw } from "lucide-react";
+import { LogOut, RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import {
@@ -12,6 +12,7 @@ import {
 } from "~/components/ui/card";
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
+import logout from "~/server/actions/logout";
 import { api } from "~/trpc/react";
 
 export function AdminSettings() {
@@ -121,6 +122,15 @@ export function AdminSettings() {
 							>
 								<RefreshCcw />
 							</Button>
+						</div>
+
+						<div className="flex items-center justify-between rounded-md border border-ring px-6 py-4.5">
+							<form action={logout}>
+								<Label htmlFor="logout">Logout</Label>
+								<Button size="sm" id="logout" type="submit">
+									<LogOut />
+								</Button>
+							</form>
 						</div>
 					</div>
 				</CardContent>

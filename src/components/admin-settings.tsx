@@ -10,6 +10,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "~/components/ui/card";
+import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
 import logout from "~/server/actions/logout";
@@ -65,7 +66,14 @@ export function AdminSettings() {
 		<div className="flex w-full justify-center pb-10">
 			<Card>
 				<CardHeader>
-					<CardTitle>Settings</CardTitle>
+					<CardTitle className="flex items-center justify-between">
+						Settings
+						<form action={logout}>
+							<Button id="logout" type="submit">
+								<LogOut />
+							</Button>
+						</form>
+					</CardTitle>
 					{event?.lockAt && !event?.isLocked && (
 						<CardDescription>{`Locking Date set to: ${event.lockAt.toISOString()}`}</CardDescription>
 					)}
@@ -122,15 +130,6 @@ export function AdminSettings() {
 							>
 								<RefreshCcw />
 							</Button>
-						</div>
-
-						<div className="flex items-center justify-between rounded-md border border-ring px-6 py-4.5">
-							<form action={logout}>
-								<Label htmlFor="logout">Logout</Label>
-								<Button size="sm" id="logout" type="submit">
-									<LogOut />
-								</Button>
-							</form>
 						</div>
 					</div>
 				</CardContent>

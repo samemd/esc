@@ -30,11 +30,11 @@ export function LeaderBoard() {
 						</div>
 					)}
 					<div className="flex w-full justify-between">
-						<div className="flex gap-4 text-2xl">
+						<div className="flex max-w-[60%] gap-2 text-2xl md:gap-4">
 							<p className="font-extrabold text-emerald-400">{index + 1}</p>
 							<h3 className="truncate font-bold">{score.user.name}</h3>
 						</div>
-						<div className="flex gap-4 text-2xl">
+						<div className="flex shrink-0 gap-2 text-2xl md:gap-4">
 							<span className="text-muted-foreground">Score</span>
 							<span className="font-extrabold text-emerald-400">
 								{score.score}

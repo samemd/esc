@@ -4,12 +4,12 @@ import type { Metadata } from "next";
 import { Geist, Shadows_Into_Light } from "next/font/google";
 
 import { LogOut } from "lucide-react";
-import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import type { ReactNode } from "react";
 import { Navigation } from "~/components/navigation";
 import { Button } from "~/components/ui/button";
 import { Toaster } from "~/components/ui/sonner";
+import { Providers } from "~/providers/providers";
 import logout from "~/server/actions/logout";
 import { auth } from "~/server/auth";
 import { TRPCReactProvider } from "~/trpc/react";
@@ -47,7 +47,7 @@ export default async function RootLayout({
 			</Head>
 			<body>
 				<TRPCReactProvider>
-					<SessionProvider session={session}>
+					<Providers session={session}>
 						<Navigation />
 						<div className="pt-0 pb-16 md:pt-16 md:pb-0">
 							<div className="relative min-h-(--min-height) w-full bg-gradient-to-b from-black to-[#15162c]">
@@ -69,7 +69,7 @@ export default async function RootLayout({
 							mobileOffset={{ bottom: 80 }}
 							richColors
 						/>
-					</SessionProvider>
+					</Providers>
 				</TRPCReactProvider>
 			</body>
 		</html>

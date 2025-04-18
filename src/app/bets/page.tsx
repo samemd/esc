@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import { Bet } from "~/components/bet";
+import { Suspense } from "react";
+import { BetCard } from "~/components/bet/bet-card";
 import { auth } from "~/server/auth";
-import { HydrateClient, api } from "~/trpc/server";
 
 export default async function Home() {
 	const session = await auth();
@@ -10,13 +10,11 @@ export default async function Home() {
 		redirect("/login?redirectTo=/bets");
 	}
 
-	await Promise.all([api.user.get.prefetch(), api.bet.getForUser.prefetch()]);
-
 	return (
-		<HydrateClient>
-			<main className="flex min-h-(--min-height) w-full items-center justify-center">
-				<Bet />
-			</main>
-		</HydrateClient>
+		<main className="flex min-h-(--min-height) w-full items-center justify-center">
+			<Suspense>
+				<BetCard />
+			</Suspense>
+		</main>
 	);
 }

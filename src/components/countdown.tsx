@@ -68,12 +68,12 @@ export function Countdown({
 	}, [targetDate]);
 
 	return (
-		<div ref={parent} className="flex">
+		<div ref={parent} className="flex w-full justify-center">
 			{mounted && !isAfter(new Date(), targetDate) && (
 				<div
 					className={cn(
 						"flex flex-col items-center justify-center gap-6 rounded-xl border bg-card p-8 shadow-md",
-						{ "md:w-md": size === "sm" },
+						{ "w-full md:w-md": size === "sm" },
 						className,
 					)}
 				>

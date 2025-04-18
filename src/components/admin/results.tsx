@@ -9,7 +9,6 @@ import { ActionBar } from "~/components/action-bar";
 import { NationsAutoComplete } from "~/components/primitives/nations";
 import { Button } from "~/components/ui/button";
 import {
-	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
@@ -25,9 +24,7 @@ import {
 import { type Ranking, RankingSchema, RankingsFormSchema } from "~/lib/schemas";
 import { api } from "~/trpc/react";
 
-export function Results({
-	rankings: initialRankings,
-}: { rankings: Ranking[] }) {
+export function Results({ rankings }: { rankings: Ranking[] }) {
 	const utils = api.useUtils();
 
 	const { mutate: submitRankings, isPending } =
@@ -52,18 +49,13 @@ export function Results({
 		},
 	});
 
-	const { data: existingRankings } = api.event.getRankings.useQuery(undefined, {
-		initialData: initialRankings,
-	});
-
 	const defaultValues = useMemo(
 		() =>
 			Array.from({ length: 26 }, (_, i) => ({
 				position: i + 1,
-				country:
-					existingRankings?.find((r) => r.position === i + 1)?.country ?? "",
+				country: rankings?.find((r) => r.position === i + 1)?.country ?? "",
 			})),
-		[existingRankings],
+		[rankings],
 	);
 
 	// Initialize form with 37 positions
@@ -92,53 +84,49 @@ export function Results({
 	}
 
 	return (
-		<div className="flex w-full justify-center pb-10">
-			<Card>
-				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)}>
-						<CardHeader>
-							<CardTitle>Enter Final Results</CardTitle>
-							<CardDescription>
-								Enter the final ranking positions for all 37 countries
-							</CardDescription>
-						</CardHeader>
-						<CardContent className="pt-8">
-							<div className="grid gap-6 pb-16 md:grid-cols-2">
-								{fields.map((field, index) => {
-									const excludedCountries = watchedRankings
-										.map((r) => r.country)
-										.filter(
-											(country, i) =>
-												i !== index && country !== "" && country !== undefined,
-										);
-									return (
-										<FormField
-											key={field.id}
-											control={form.control}
-											name={`rankings.${index}.country`}
-											render={({ field: countryField }) => (
-												<FormItem className="flex flex-col">
-													<FormLabel>Position {index + 1}</FormLabel>
-													<NationsAutoComplete
-														{...countryField}
-														excludedCountries={excludedCountries}
-													/>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-									);
-								})}
-							</div>
-						</CardContent>
-						<ActionBar className="px-6">
-							<Button type="submit" className="w-full" disabled={isPending}>
-								{isPending ? "Submitting..." : "Submit Rankings"}
-							</Button>
-						</ActionBar>
-					</form>
-				</Form>
-			</Card>
-		</div>
+		<Form {...form}>
+			<form onSubmit={form.handleSubmit(onSubmit)}>
+				<CardHeader>
+					<CardTitle>Enter Final Results</CardTitle>
+					<CardDescription>
+						Enter the final ranking positions for all 37 countries
+					</CardDescription>
+				</CardHeader>
+				<CardContent className="pt-8">
+					<div className="grid gap-6 pb-16 md:grid-cols-2">
+						{fields.map((field, index) => {
+							const excludedCountries = watchedRankings
+								.map((r) => r.country)
+								.filter(
+									(country, i) =>
+										i !== index && country !== "" && country !== undefined,
+								);
+							return (
+								<FormField
+									key={field.id}
+									control={form.control}
+									name={`rankings.${index}.country`}
+									render={({ field: countryField }) => (
+										<FormItem className="flex flex-col">
+											<FormLabel>Position {index + 1}</FormLabel>
+											<NationsAutoComplete
+												{...countryField}
+												excludedCountries={excludedCountries}
+											/>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							);
+						})}
+					</div>
+				</CardContent>
+				<ActionBar className="px-6">
+					<Button type="submit" className="w-full" disabled={isPending}>
+						{isPending ? "Submitting..." : "Submit Rankings"}
+					</Button>
+				</ActionBar>
+			</form>
+		</Form>
 	);
 }

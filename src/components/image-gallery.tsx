@@ -53,7 +53,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 
 			{/* Full-Screen Dialog with Carousel */}
 			<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-				<DialogContent className="max-sm:h-screen">
+				<DialogContent className="max-sm:h-dvh">
 					<DialogHeader>
 						<DialogTitle>The Venue</DialogTitle>
 					</DialogHeader>

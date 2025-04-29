@@ -12,7 +12,7 @@ export async function HomePage() {
 	]);
 
 	return (
-		<div className="inset-shadow-top flex min-h-[50.8vh] flex-col items-center justify-start gap-y-8 bg-gradient-to-b from-black to-background-blue py-4 text-white md:min-h-[55.8vh] md:gap-y-14 md:py-20">
+		<div className="inset-shadow-top flex min-h-[50.4vh] flex-col items-center justify-start gap-y-8 bg-gradient-to-b from-black to-background-blue py-4 text-white md:min-h-[55.4vh] md:gap-y-14 md:py-20">
 			{event?.showCountdown && (
 				<Countdown
 					targetDate={EVENT_DATE}

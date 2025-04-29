@@ -1,8 +1,16 @@
+// app/event/page.tsx
 import { Calendar, Clock, MapPin, Shirt } from "lucide-react";
 import Image from "next/image";
+import ImageGallery from "~/components/image-gallery";
 import { Logo } from "~/components/logo";
 
 export default function EventPage() {
+	const images = [
+		{ src: "/halle1.jpg", alt: "Padel Court 1" },
+		{ src: "/halle2.jpg", alt: "Padel Court 2" },
+		{ src: "/halle3.jpg", alt: "Padel Court 3" },
+	];
+
 	return (
 		<div className="min-h-screen">
 			{/* Hero Section */}
@@ -91,7 +99,7 @@ export default function EventPage() {
 						</div>
 					</div>
 
-					{/* Right Column - Map & Photos */}
+					{/* Right Column - Photos */}
 					<div className="space-y-8">
 						{/* Map */}
 						<div className="rounded-xl bg-card p-6 shadow-lg">
@@ -113,53 +121,7 @@ export default function EventPage() {
 						</div>
 
 						{/* Photos */}
-						<div className="rounded-xl bg-card p-6 shadow-lg">
-							<h2 className="mb-6 font-bold font-hand text-2xl text-emerald-400 tracking-wider md:text-3xl">
-								The Venue
-							</h2>
-							<div className="grid grid-cols-1 gap-4">
-								<div className="relative h-64 overflow-hidden rounded-lg md:hidden">
-									<Image
-										src="/halle1.jpg"
-										alt="Padel Court"
-										fill
-										className="rounded-lg object-cover"
-									/>
-									<div className="absolute right-4 bottom-4 flex space-x-2">
-										<span className="h-2 w-2 rounded-full bg-white opacity-100"/>
-										<span className="h-2 w-2 rounded-full bg-white opacity-50"/>
-										<span className="h-2 w-2 rounded-full bg-white opacity-50"/>
-									</div>
-								</div>
-
-								<div className="hidden grid-cols-3 gap-3 md:grid">
-									<div className="relative h-40 overflow-hidden rounded-lg">
-										<Image
-											src="/halle1.jpg"
-											alt="Padel Court 1"
-											fill
-											className="object-cover transition-transform duration-300 hover:scale-105"
-										/>
-									</div>
-									<div className="relative h-40 overflow-hidden rounded-lg">
-										<Image
-											src="/halle2.jpg"
-											alt="Padel Court 2"
-											fill
-											className="object-cover transition-transform duration-300 hover:scale-105"
-										/>
-									</div>
-									<div className="relative h-40 overflow-hidden rounded-lg">
-										<Image
-											src="/halle1.jpg"
-											alt="Padel Court 3"
-											fill
-											className="object-cover transition-transform duration-300 hover:scale-105"
-										/>
-									</div>
-								</div>
-							</div>
-						</div>
+						<ImageGallery images={images} />
 					</div>
 				</div>
 			</div>

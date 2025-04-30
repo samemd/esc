@@ -27,7 +27,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 	};
 
 	return (
-		<div className="rounded-xl bg-card p-6 shadow-lg">
+		<div className="rounded-xl bg-card p-6 shadow-lg md:col-span-2">
 			<h2 className="mb-6 font-bold font-hand text-2xl text-emerald-400 tracking-wider md:text-3xl">
 				The Venue
 			</h2>
@@ -38,7 +38,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 					<div
 						// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 						key={index}
-						className="relative h-64 cursor-pointer overflow-hidden rounded-lg md:h-40"
+						className="relative h-64 cursor-pointer overflow-hidden rounded-lg md:h-96"
 						onClick={() => openDialogWithImage(index)}
 					>
 						<Image
@@ -66,7 +66,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 								{reorderedImages.map((image, index) => (
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									<CarouselItem key={index}>
-										<div className="relative aspect-[1.5] w-full overflow-hidden rounded-lg">
+										<div className="relative aspect-[1.5] w-full overflow-hidden rounded-lg md:max-h-[80dvh]">
 											<Image
 												src={image.src}
 												alt={image.alt}

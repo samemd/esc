@@ -1,13 +1,21 @@
 // app/event/page.tsx
-import { Calendar, Clock, MapPin, Shirt } from "lucide-react";
+import {
+	Calendar,
+	ChefHat,
+	CircleDollarSign,
+	Clock,
+	MapPin,
+	Martini,
+	Shirt,
+} from "lucide-react";
 import Image from "next/image";
 import ImageGallery from "~/components/image-gallery";
 import { Logo } from "~/components/logo";
 
 export default function EventPage() {
 	const images = [
-		{ src: "/halle1.jpg", alt: "Padel Court 1" },
-		{ src: "/halle2.jpg", alt: "Padel Court 2" },
+		{ src: "/halle2.jpg", alt: "Padel Court 1" },
+		{ src: "/halle1.jpg", alt: "Padel Court 2" },
 		{ src: "/halle3.jpg", alt: "Padel Court 3" },
 	];
 
@@ -41,15 +49,12 @@ export default function EventPage() {
 								Event Details
 							</h2>
 
-							<div className="space-y-4">
+							<div className="grid grid-cols-2 space-y-4">
 								<div className="flex items-start">
 									<MapPin className="mt-1 h-6 w-6 flex-shrink-0 text-emerald-300" />
 									<div className="ml-4">
 										<h3 className="font-semibold text-xl">Location</h3>
 										<p className="text-gray-300">PadelHalle Klybeck</p>
-										<p className="text-gray-400 text-sm">
-											Gebäude K-102, Klybeckstrasse 141, 4057 Basel
-										</p>
 									</div>
 								</div>
 
@@ -65,7 +70,9 @@ export default function EventPage() {
 									<Clock className="mt-1 h-6 w-6 flex-shrink-0 text-emerald-300" />
 									<div className="ml-4">
 										<h3 className="font-semibold text-xl">Time</h3>
-										<p className="text-gray-300">Starting at 19:30</p>
+										<p className="text-gray-300">
+											Doors: 19.30 | Viewing 21.00
+										</p>
 									</div>
 								</div>
 
@@ -73,56 +80,60 @@ export default function EventPage() {
 									<Shirt className="mt-1 h-6 w-6 flex-shrink-0 text-emerald-300" />
 									<div className="ml-4">
 										<h3 className="font-semibold text-xl">Dresscode</h3>
-										<p className="text-gray-300">Flamboyant</p>
+										<p className="text-gray-300">ESC Extravanganza</p>
+									</div>
+								</div>
+
+								<div className="flex items-start">
+									<Martini className="mt-1 h-6 w-6 flex-shrink-0 text-emerald-300" />
+									<div className="ml-4">
+										<h3 className="font-semibold text-xl">Drinks</h3>
+										<p className="text-gray-300">Bring was du trinkst!</p>
+									</div>
+								</div>
+
+								<div className="flex items-start">
+									<ChefHat className="mt-1 h-6 w-6 flex-shrink-0 text-emerald-300" />
+									<div className="ml-4">
+										<h3 className="font-semibold text-xl">Food</h3>
+										<p className="text-gray-300">
+											Komm satt, iss einen Midnight Snack vor Ort
+										</p>
+									</div>
+								</div>
+
+								<div className="col-span-2 flex items-start">
+									<CircleDollarSign className="mt-1 h-6 w-6 flex-shrink-0 text-emerald-300" />
+									<div className="ml-4">
+										<h3 className="font-semibold text-xl">Entry</h3>
+										<p className="text-gray-300">
+											CHF 20.- Unkostenbeitrag für Organisation & Miete per
+											Twint beim Einlass
+										</p>
 									</div>
 								</div>
 							</div>
 						</div>
-
-						<div className="rounded-xl bg-card p-6 shadow-lg">
-							<div className="flex items-start">
-								<div className="">
-									<h2 className="mb-6 font-bold font-hand text-2xl text-emerald-400 tracking-wider md:text-3xl">
-										Important Information
-									</h2>
-									<ul className="list-inside list-disc space-y-2 text-gray-300">
-										<li>Please bring your own beverages and snacks</li>
-										<li>Please clean up after yourself</li>
-										<li>...</li>
-										<li>...</li>
-										<li>...</li>
-										<li>...</li>
-										<li>...</li>
-									</ul>
-								</div>
-							</div>
-						</div>
 					</div>
 
-					{/* Right Column - Photos */}
-					<div className="space-y-8">
-						{/* Map */}
-						<div className="rounded-xl bg-card p-6 shadow-lg">
-							<h2 className="mb-6 font-bold font-hand text-2xl text-emerald-400 tracking-wider md:text-3xl">
-								Location
-							</h2>
-							<div className="h-64 w-full overflow-hidden rounded-lg md:h-80">
-								<iframe
-									src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6154.339956377856!2d7.586662776779076!3d47.57464567118695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4791b90d53cfe26d%3A0xf06863ec5019cd14!2sPadel%20Basel%20Klybeck!5e1!3m2!1sen!2sus!4v1744793634064!5m2!1sen!2sus"
-									title="Padel Basel Klybeck"
-									width="600"
-									height="450"
-									style={{ border: 0 }}
-									allowFullScreen={true}
-									loading="lazy"
-									referrerPolicy="no-referrer-when-downgrade"
-								/>
-							</div>
+					{/* Map */}
+					<div className="flex flex-col rounded-xl bg-card p-6 shadow-lg">
+						<h2 className="mb-6 font-bold font-hand text-2xl text-emerald-400 tracking-wider md:text-3xl">
+							Location
+						</h2>
+						<div className="flex min-h-60 w-full grow-1 overflow-hidden rounded-lg ">
+							<iframe
+								src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6154.339956377856!2d7.586662776779076!3d47.57464567118695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4791b90d53cfe26d%3A0xf06863ec5019cd14!2sPadel%20Basel%20Klybeck!5e1!3m2!1sen!2sus!4v1744793634064!5m2!1sen!2sus"
+								title="Padel Basel Klybeck"
+								allowFullScreen={true}
+								loading="lazy"
+								referrerPolicy="no-referrer-when-downgrade"
+								className="h-full w-full border-0 object-cover"
+							/>
 						</div>
-
-						{/* Photos */}
-						<ImageGallery images={images} />
 					</div>
+					{/* Photos */}
+					<ImageGallery images={images} />
 				</div>
 			</div>
 		</div>

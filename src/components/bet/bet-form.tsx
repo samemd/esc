@@ -92,6 +92,10 @@ export function BetForm() {
 					</CardTitle>
 					<CardDescription>
 						<div>Wer gewinnt den ESC 2025?</div>
+						<div className="mt-4 text-balance text-sm">
+							Du kannst deine Auswahl jederzeit anpassen bis zum Ende des
+							offiziellen Votings.
+						</div>
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-8 pt-8">

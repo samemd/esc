@@ -24,7 +24,7 @@ export const userRouter = createTRPCRouter({
 	getScores: publicProcedure.query(async ({ ctx }) => {
 		return ctx.db.score.findMany({
 			include: { user: { include: { bet: true } } },
-			orderBy: { score: "asc" },
+			orderBy: { score: "desc" },
 		});
 	}),
 });

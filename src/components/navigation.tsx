@@ -28,7 +28,7 @@ export async function Navigation() {
 				{session?.user?.isAdmin && (
 					<Link
 						href="/admin"
-						className="flex flex-col items-center px-10 py-4"
+						className="flex flex-col items-center px-0 py-4"
 						prefetch
 					>
 						Admin

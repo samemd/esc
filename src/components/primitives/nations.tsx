@@ -15,7 +15,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "~/components/ui/popover";
-import { NationOptions } from "~/lib/constants";
+import { FinalNationOptions, NationOptions } from "~/lib/constants";
 import { cn } from "~/lib/utils";
 
 type NationsProps = {
@@ -61,7 +61,7 @@ export function NationsAutoComplete({
 					<CommandList>
 						<CommandEmpty>No Country found.</CommandEmpty>
 						<CommandGroup>
-							{NationOptions.filter(
+							{FinalNationOptions.filter(
 								(n) => !excludedCountries?.includes(n.name),
 							).map((nation) => (
 								<CommandItem

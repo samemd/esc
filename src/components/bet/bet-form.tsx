@@ -35,9 +35,12 @@ export function BetForm() {
 	const [user] = api.user.get.useSuspenseQuery();
 
 	const { mutate: submitBet } = api.bet.submit.useMutation({
-		onSuccess: () => {
+		onMutate: () => {
 			trigger();
+		},
+		onSuccess: () => {
 			void utils.bet.getForUser.invalidate();
+
 			toast.success("Vote submitted");
 		},
 		onError: (error) => {
@@ -87,7 +90,9 @@ export function BetForm() {
 							<Trash2 className="size-6 w-full text-muted-foreground" />
 						</Button>
 					</CardTitle>
-					<CardDescription>Who is gonna win the ESC 2025?</CardDescription>
+					<CardDescription>
+						<div>Wer gewinnt den ESC 2025?</div>
+					</CardDescription>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-8 pt-8">
 					<FormField

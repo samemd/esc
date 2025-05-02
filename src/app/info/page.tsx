@@ -25,7 +25,7 @@ export default function EventPage() {
 			<div className="relative h-64">
 				<Image
 					src="/banner.webp"
-					alt="PadelHalle Klybeck"
+					alt="Padelhalle Klybeck"
 					fill
 					className="object-cover [object-position:center_70%]"
 					priority
@@ -54,7 +54,7 @@ export default function EventPage() {
 									<MapPin className="mt-1 h-6 w-6 flex-shrink-0 text-emerald-300" />
 									<div className="ml-4">
 										<h3 className="font-semibold text-xl">Location</h3>
-										<p className="text-gray-300">PadelHalle Klybeck</p>
+										<p className="text-gray-300">Padelhalle Klybeck</p>
 									</div>
 								</div>
 

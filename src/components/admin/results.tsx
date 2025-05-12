@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo } from "react";
-import { useFieldArray, useForm, useWatch } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
 import { ActionBar } from "~/components/action-bar";
@@ -71,11 +71,6 @@ export function Results({ rankings }: { rankings: Ranking[] }) {
 		name: "rankings",
 	});
 
-	const watchedRankings = useWatch({
-		control: form.control,
-		name: "rankings",
-	});
-
 	function onSubmit(data: z.infer<typeof RankingsFormSchema>) {
 		const rankings = data.rankings.filter(
 			(r): r is Ranking => RankingSchema.safeParse(r).success,
@@ -95,12 +90,6 @@ export function Results({ rankings }: { rankings: Ranking[] }) {
 				<CardContent className="pt-8">
 					<div className="grid gap-6 pb-16 md:grid-cols-2">
 						{fields.map((field, index) => {
-							const excludedCountries = watchedRankings
-								.map((r) => r.country)
-								.filter(
-									(country, i) =>
-										i !== index && country !== "" && country !== undefined,
-								);
 							return (
 								<FormField
 									key={field.id}
@@ -109,10 +98,7 @@ export function Results({ rankings }: { rankings: Ranking[] }) {
 									render={({ field: countryField }) => (
 										<FormItem className="flex flex-col">
 											<FormLabel>Position {index + 1}</FormLabel>
-											<NationsAutoComplete
-												{...countryField}
-												excludedCountries={excludedCountries}
-											/>
+											<NationsAutoComplete {...countryField} />
 											<FormMessage />
 										</FormItem>
 									)}

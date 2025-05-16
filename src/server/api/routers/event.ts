@@ -50,8 +50,9 @@ export const eventRouter = createTRPCRouter({
 		}),
 
 	getRankings: publicProcedure.query(async ({ ctx }) => {
-		return ctx.db.ranking.findMany({
+		const rankings = await ctx.db.ranking.findMany({
 			orderBy: { position: "asc" },
 		});
+		return rankings.map((r) => ({ ...r, score: r.score ?? undefined }));
 	}),
 });

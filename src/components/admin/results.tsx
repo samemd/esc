@@ -21,6 +21,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
 import { type Ranking, RankingSchema, RankingsFormSchema } from "~/lib/schemas";
 import { api } from "~/trpc/react";
 
@@ -54,11 +55,11 @@ export function Results({ rankings }: { rankings: Ranking[] }) {
 			Array.from({ length: 26 }, (_, i) => ({
 				position: i + 1,
 				country: rankings?.find((r) => r.position === i + 1)?.country ?? "",
+				score: "",
 			})),
 		[rankings],
 	);
 
-	// Initialize form with 37 positions
 	const form = useForm<z.infer<typeof RankingsFormSchema>>({
 		resolver: zodResolver(RankingsFormSchema),
 		defaultValues: {
@@ -89,6 +90,22 @@ export function Results({ rankings }: { rankings: Ranking[] }) {
 				</CardHeader>
 				<CardContent className="pt-8">
 					<div className="grid gap-6 pb-16 md:grid-cols-2">
+						<FormField
+							control={form.control}
+							name={"rankings.0.score"}
+							render={({ field }) => (
+								<FormItem className="col-span-2 flex flex-col">
+									<FormLabel>Winning Score</FormLabel>
+									<Input
+										className="rounded-full border-ring bg-background [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+										type="number"
+										placeholder="0"
+										{...field}
+									/>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 						{fields.map((field, index) => {
 							return (
 								<FormField

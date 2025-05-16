@@ -1,8 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Trash2 } from "lucide-react";
-import { useRef } from "react";
+import { Info, Trash2 } from "lucide-react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
@@ -22,6 +22,12 @@ import {
 	FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { useConfetti } from "~/hooks/confetti";
 import { BetSchema } from "~/lib/schemas";
 import { api } from "~/trpc/react";
@@ -30,6 +36,7 @@ export function BetForm() {
 	const utils = api.useUtils();
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const { trigger } = useConfetti(buttonRef);
+	const [tooltipOpen, setTooltipOpen] = useState(false);
 
 	const [bet] = api.bet.getForUser.useSuspenseQuery();
 	const [user] = api.user.get.useSuspenseQuery();
@@ -63,6 +70,7 @@ export function BetForm() {
 			second: bet?.second,
 			third: bet?.third,
 			last: bet?.last,
+			winningScore: bet?.winningScore ?? "",
 		},
 	});
 
@@ -105,6 +113,44 @@ export function BetForm() {
 									className="rounded-full border-ring bg-background"
 									type="text"
 									placeholder="Your name"
+									{...field}
+								/>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="winningScore"
+						render={({ field }) => (
+							<FormItem className="flex flex-col">
+								<div className="flex justify-between">
+									<FormLabel>Winning Score</FormLabel>
+									<TooltipProvider delayDuration={10}>
+										<Tooltip open={tooltipOpen} onOpenChange={setTooltipOpen}>
+											<TooltipTrigger asChild>
+												<button
+													type="button"
+													className="cursor-pointer"
+													onClick={() => setTooltipOpen(true)}
+												>
+													<Info className="text-gray-400" />
+												</button>
+											</TooltipTrigger>
+											<TooltipContent>
+												<p className="flex flex-col whitespace-pre-line text-xs">
+													{`Jede Nation verteilt 2 x 12 Punkte (Jury, Publikum). 
+													Bei 37 Teilnehmern sind das maximal 888 Punkte. 
+													Nemo gewann 2024 mit 591 Punkten.`}
+												</p>
+											</TooltipContent>
+										</Tooltip>
+									</TooltipProvider>
+								</div>
+								<Input
+									className="rounded-full border-ring bg-background [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+									type="number"
+									placeholder="How many points will the winner get?"
 									{...field}
 								/>
 								<FormMessage />

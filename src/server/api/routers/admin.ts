@@ -20,6 +20,7 @@ export const adminRouter = createTRPCRouter({
 		]);
 
 		const scores = bets.map((bet) => {
+			// 1) The four positional predictions
 			const predictions = [
 				{ position: 1, country: bet.winner, weight: 1.5 },
 				{ position: 2, country: bet.second, weight: 1.25 },
@@ -30,25 +31,35 @@ export const adminRouter = createTRPCRouter({
 			const baseScore = 100; // Starting score
 			const exactGuessBonus = 50; // Bonus points for exact guesses
 
-			const score = predictions.reduce((acc, prediction) => {
-				const actual = rankings.find((r) => r.country === prediction.country);
-
+			// 2) Compute the "position‐based" points
+			let score = predictions.reduce((acc, { position, country, weight }) => {
+				const actual = rankings.find((r) => r.country === country);
 				if (!actual) {
 					return acc - 50;
 				}
-
-				const positionDifference = Math.abs(
-					actual.position - prediction.position,
-				);
-
-				if (positionDifference === 0) {
-					// Exact guess: add bonus points (weighted for winner)
-					return acc + exactGuessBonus * prediction.weight;
+				const diff = Math.abs(actual.position - position);
+				if (diff === 0) {
+					return acc + exactGuessBonus * weight;
 				}
-				// Points based on how close the guess was (weighted for winner)
-				// The closer the guess, the more points (max points minus the difference)
-				return acc + (25 - positionDifference);
+				return acc + (25 - diff) * weight;
 			}, baseScore);
+
+			// 3) Parse the user’s predicted winningScore and the real one
+			const predictedWS = Number.parseInt(bet.winningScore || "", 10);
+			const winnerScore = rankings.find((r) => r.position === 1)?.score;
+			const actualWS = winnerScore
+				? Number.parseInt(winnerScore, 10)
+				: undefined;
+
+			// 4) Award based on how close they got the winning score
+			const d = Math.abs(actualWS ?? 0 - predictedWS);
+			if (d === 0) {
+				// exact score
+				score += 30;
+			} else {
+				// sliding‐scale: max 20 pts for very close guesses
+				score += Math.max(0, 20 - d);
+			}
 
 			return {
 				userId: bet.createdById,
@@ -58,10 +69,7 @@ export const adminRouter = createTRPCRouter({
 
 		// delete all existing scores
 		await ctx.db.score.deleteMany({});
-
-		await ctx.db.score.createMany({
-			data: scores,
-		});
+		await ctx.db.score.createMany({ data: scores });
 
 		return scores;
 	}),

@@ -7,6 +7,7 @@ export const BetSchema = z
 		second: z.string(),
 		third: z.string(),
 		last: z.string(),
+		winningScore: z.string(),
 	})
 	.superRefine((data, ctx) => {
 		const countries = [data.winner, data.second, data.third, data.last];
@@ -26,8 +27,9 @@ export const BetSchema = z
 	});
 
 export const RankingSchema = z.object({
-	position: z.number().int().min(1).max(37),
+	position: z.number().int().min(1).max(26),
 	country: z.string().min(1, "Country is required"),
+	score: z.string().optional(),
 });
 export type Ranking = z.infer<typeof RankingSchema>;
 
@@ -40,6 +42,7 @@ export const RankingsFormSchema = z
 			z.object({
 				position: z.number().int().optional(),
 				country: z.string().optional(),
+				score: z.string().optional(),
 			}),
 		),
 	})

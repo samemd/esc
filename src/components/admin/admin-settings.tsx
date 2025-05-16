@@ -1,8 +1,9 @@
 "use client";
 
 import { RefreshCcw } from "lucide-react";
+import Link from "next/link";
 import { toast } from "sonner";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
 import { type RouterOutputs, api } from "~/trpc/react";
@@ -106,6 +107,17 @@ export function AdminSettings({
 				>
 					<RefreshCcw />
 				</Button>
+			</div>
+			<div className="flex items-center justify-between rounded-md border border-ring p-6">
+				<Label htmlFor="show-countdown">Database access</Label>
+				<Link
+					id="db-link"
+					className={buttonVariants({})}
+					href="https://console.neon.tech/app/projects/morning-bush-04673706/branches/br-dry-glade-a2usas51/tables"
+					target="_blank"
+				>
+					Open Database Dashboard
+				</Link>
 			</div>
 		</div>
 	);

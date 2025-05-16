@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash2 } from "lucide-react";
 import { useRef } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
 import { NationsAutoComplete } from "~/components/primitives/nations";
@@ -65,10 +65,6 @@ export function BetForm() {
 			last: bet?.last,
 		},
 	});
-	const watchedValues = useWatch({
-		control: form.control,
-		name: ["winner", "second", "third", "last"],
-	});
 
 	function onSubmit(data: z.infer<typeof BetSchema>) {
 		submitBet(data);
@@ -121,14 +117,7 @@ export function BetForm() {
 						render={({ field }) => (
 							<FormItem className="flex flex-col">
 								<FormLabel>Winner 🏆</FormLabel>
-								<NationsAutoComplete
-									{...field}
-									excludedCountries={[
-										watchedValues[1], // second
-										watchedValues[2], // third
-										watchedValues[3], // last
-									].filter(Boolean)}
-								/>
+								<NationsAutoComplete {...field} />
 								<FormMessage />
 							</FormItem>
 						)}
@@ -139,14 +128,7 @@ export function BetForm() {
 						render={({ field }) => (
 							<FormItem className="flex flex-col">
 								<FormLabel>Second {"\u{1F948}"}</FormLabel>
-								<NationsAutoComplete
-									{...field}
-									excludedCountries={[
-										watchedValues[0], // first
-										watchedValues[2], // third
-										watchedValues[3], // last
-									].filter(Boolean)}
-								/>
+								<NationsAutoComplete {...field} />
 								<FormMessage />
 							</FormItem>
 						)}
@@ -157,14 +139,7 @@ export function BetForm() {
 						render={({ field }) => (
 							<FormItem className="flex flex-col">
 								<FormLabel>Third {"\u{1F949}"}</FormLabel>
-								<NationsAutoComplete
-									{...field}
-									excludedCountries={[
-										watchedValues[0], // second
-										watchedValues[1], // second
-										watchedValues[3], // last
-									].filter(Boolean)}
-								/>
+								<NationsAutoComplete {...field} />
 								<FormMessage />
 							</FormItem>
 						)}
@@ -175,14 +150,7 @@ export function BetForm() {
 						render={({ field }) => (
 							<FormItem className="flex flex-col">
 								<FormLabel>Last {"\u{1F4A9}"}</FormLabel>
-								<NationsAutoComplete
-									{...field}
-									excludedCountries={[
-										watchedValues[0], // first
-										watchedValues[1], // second
-										watchedValues[2], // third
-									].filter(Boolean)}
-								/>
+								<NationsAutoComplete {...field} />
 								<FormMessage />
 							</FormItem>
 						)}

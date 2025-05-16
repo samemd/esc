@@ -1,4 +1,4 @@
-export const EVENT_DATE = new Date("2025-05-17T21:00:00Z");
+export const EVENT_DATE = new Date("2025-05-17T21:00:00+02:00");
 
 export interface NationOption {
 	code: string;

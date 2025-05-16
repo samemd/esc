@@ -116,7 +116,7 @@ export function AdminSettings({
 					href="https://console.neon.tech/app/projects/morning-bush-04673706/branches/br-dry-glade-a2usas51/tables"
 					target="_blank"
 				>
-					Open Database Dashboard
+					Open
 				</Link>
 			</div>
 		</div>
